@@ -1,32 +1,18 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaBrain, FaMemory, FaHeart, FaPause, FaPlay, FaRedo, FaTrophy } from 'react-icons/fa';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
+import { FaBrain, FaHeart, FaPause, FaPlay, FaRedo, FaTrophy } from 'react-icons/fa';
 import { GiBrainFreeze, GiBrainTentacle } from 'react-icons/gi';
 import { BsLightningChargeFill } from 'react-icons/bs';
-import styled, { keyframes, css, createGlobalStyle } from 'styled-components';
+import styled from 'styled-components';
 
 // Types
-type GamePhase = 'idle' | 'memorize' | 'recall' | 'evaluating' | 'gameOver' | 'levelComplete' | 'paused';
-type CellState = 'hidden' | 'highlighted' | 'correct' | 'incorrect' | 'empty';
+type GamePhase = 'idle' | 'memorize' | 'recall' | 'gameOver' | 'levelComplete' | 'paused';
+type CellState = 'hidden' | 'highlighted' | 'correct' | 'incorrect';
 
 interface Cell {
   id: number;
   state: CellState;
   isHighlighted: boolean;
-}
-
-interface Particle {
-  id: number;
-  x: number;
-  y: number;
-  type: 'correct' | 'incorrect';
-}
-
-interface GameConfig {
-  size: number;
-  time: number;
-  points: number;
-  lives: number;
 }
 
 const GAME_CONFIG = {
@@ -78,25 +64,25 @@ const Cell = styled(motion.div).withConfig({
   overflow: hidden;
   transition: all 0.3s ease;
 
-  ${({ $state, $isHighlighted }) => {
+  ${({ $state }) => {
     switch ($state) {
       case 'highlighted':
-        return css`
+        return `
           background: rgba(59, 130, 246, 0.8);
           box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
         `;
       case 'correct':
-        return css`
+        return `
           background: rgba(16, 185, 129, 0.8);
           box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
         `;
       case 'incorrect':
-        return css`
+        return `
           background: rgba(239, 68, 68, 0.8);
           box-shadow: 0 0 15px rgba(239, 68, 68, 0.5);
         `;
       default:
-        return css`
+        return `
           background: rgba(255, 255, 255, 0.1);
           &:hover {
             background: rgba(255, 255, 255, 0.15);
@@ -163,7 +149,7 @@ const ActionButton = styled(motion.button)`
 
 // Main Component
 const MemoryMatrix: React.FC = () => {
-  const [difficulty, setDifficulty] = useState<DifficultyLevel>('medium');
+  const [difficulty] = useState<DifficultyLevel>('medium');
   const currentConfig = GAME_CONFIG[difficulty];
   const [gamePhase, setGamePhase] = useState<GamePhase>('idle');
   const [cells, setCells] = useState<Cell[]>([]);
@@ -173,25 +159,11 @@ const MemoryMatrix: React.FC = () => {
   const [highScore, setHighScore] = useState(0);
   const [level, setLevel] = useState(1);
   const [combo, setCombo] = useState(0);
-  const [maxCombo, setMaxCombo] = useState(0);
+  // Commenting out unused state variable to fix TypeScript errors
+  // const [maxCombo, setMaxCombo] = useState(0);
   const [remainingLives, setRemainingLives] = useState<0 | 2 | 3 | 5>(currentConfig.lives);
-  const [particles, setParticles] = useState<Particle[]>([]);
-  const particlesRef = useRef(0);
   const memorizeTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
-
-  // Initialize the game board  
-  const initializeBoard = useCallback(() => {
-    const totalCells = currentConfig.size * currentConfig.size;
-    const newCells: Cell[] = Array(totalCells).fill(0).map((_, index) => ({
-      id: index,
-      state: 'hidden',
-      isHighlighted: false,
-    }));
-    setCells(newCells);
-    setSelectedCells([]);
-    setHighlightedCells([]);
-  }, [currentConfig.size]);
 
   // Start a new game
   const startGame = useCallback(() => {
@@ -260,57 +232,35 @@ const MemoryMatrix: React.FC = () => {
   }, [startGame]);
 
   // Handle cell click
-  const handleCellClick = useCallback((e: React.MouseEvent<HTMLDivElement>, cellId: number) => {
+  const handleCellClick = useCallback((_: React.MouseEvent<HTMLDivElement>, cellId: number) => {
     if (gamePhase !== 'recall' || selectedCells.includes(cellId)) return;
 
     const isCorrect = highlightedCells.includes(cellId);
     
-    // Add particle effect
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
-    
-    const newParticle = {
-      id: particlesRef.current++,
-      x,
-      y,
-      type: isCorrect ? 'correct' as const : 'incorrect' as const
-    };
-    
-    setParticles(prev => [...prev, newParticle]);
-    
-    // Remove particle after animation
-    setTimeout(() => {
-      setParticles(prev => prev.filter(p => p.id !== newParticle.id));
-    }, 1000);
-    
     // Update cell state
-    setCells(prev =>
-      prev.map(cell =>
+    setCells(prevCells => 
+      prevCells.map(cell => 
         cell.id === cellId
           ? { ...cell, state: isCorrect ? 'correct' : 'incorrect' }
           : cell
       )
     );
-    
-    // Update selected cells
-    setSelectedCells(prev => [...prev, cellId]);
-    
-    // Update score and combo
+
+    // Handle game logic based on the move
     if (isCorrect) {
       const pointsEarned = currentConfig.points * (1 + combo * 0.5);
       setScore(prev => prev + pointsEarned);
-      setCombo(prev => {
-        const newCombo = prev + 1;
-        setMaxCombo(prevMax => Math.max(prevMax, newCombo));
-        return newCombo;
-      });
+      setCombo(prev => prev + 1);
+      
+      // Add to selected cells
+      const newSelectedCells = [...selectedCells, cellId];
+      setSelectedCells(newSelectedCells);
       
       // Check if all cells are found
-      if (selectedCells.length + 1 === highlightedCells.length) {
+      if (newSelectedCells.length === highlightedCells.length) {
         setGamePhase('levelComplete');
         setLevel(prev => prev + 1);
-        // Start next level after a delay
+        // Prepare for next level
         setTimeout(() => {
           startGame();
         }, 1500);
@@ -318,8 +268,8 @@ const MemoryMatrix: React.FC = () => {
     } else {
       setCombo(0);
       setRemainingLives(prev => {
-        const newLives = Math.max(0, prev - 1) as 0 | 2 | 3 | 5;
-        if (newLives === 0) {
+        const newLives = (prev - 1) as 0 | 2 | 3 | 5;
+        if (newLives <= 0) {
           setGamePhase('gameOver');
           setHighScore(prevScore => Math.max(prevScore, score));
         }

@@ -29,7 +29,7 @@ const Games = () => {
   ];
 
   return (
-    <section id="games" className="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+    <section id="games" className="py-20 relative overflow-hidden bg-transparent">
       <div className="space-y-6">
         <motion.div 
           className="text-center mb-8"
@@ -79,6 +79,7 @@ const Games = () => {
                 className="bg-gray-900/50 backdrop-blur-sm rounded-xl p-6 border border-gray-800 shadow-lg cursor-pointer hover:border-cyan-500/30 transition-colors"
                 onClick={() => setActiveGame(game.id)}
               >
+                <div className="absolute inset-0 bg-transparent -z-10"></div>
                 <div className="bg-gradient-to-br from-cyan-500/10 to-blue-500/10 p-4 rounded-lg mb-4">
                   <div className="text-4xl mb-2">
                     {game.id === 'memory-matrix' ? '🧩' : game.id === 'memory-match' ? '🧠' : game.id === 'code-monsters' ? '👾' : '🎮'}

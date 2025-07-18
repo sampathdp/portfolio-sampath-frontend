@@ -1,11 +1,42 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useRef, useState, useCallback } from 'react';
+
+interface Position {
+  x: number;
+  y: number;
+}
+
+interface Size {
+  width: number;
+  height: number;
+}
+
+interface Player extends Position, Size {
+  vx: number;
+  vy: number;
+  onGround: boolean;
+  color: string;
+}
+
+interface Platform extends Position, Size {}
+
+interface Coin extends Position {
+  collected: boolean;
+}
+
+interface GameState {
+  player: Player;
+  platforms: Platform[];
+  coins: Coin[];
+  score: number;
+  gameOver: boolean;
+}
 
 const CodeMonstersBattle = () => {
-  const canvasRef = useRef(null);
-  const gameLoopRef = useRef(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const gameLoopRef = useRef<number | null>(null);
   const keysRef = useRef({ left: false, right: false, up: false });
   
-  const [gameState, setGameState] = useState({
+  const [gameState, setGameState] = useState<GameState>({
     player: {
       x: 100,
       y: 400,
@@ -34,7 +65,7 @@ const CodeMonstersBattle = () => {
 
   // Handle keyboard input
   useEffect(() => {
-    const handleKeyDown = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       switch(e.key) {
         case 'ArrowLeft':
         case 'a':
@@ -53,7 +84,7 @@ const CodeMonstersBattle = () => {
       }
     };
 
-    const handleKeyUp = (e) => {
+    const handleKeyUp = (e: KeyboardEvent) => {
       switch(e.key) {
         case 'ArrowLeft':
         case 'a':
@@ -81,7 +112,7 @@ const CodeMonstersBattle = () => {
   }, []);
 
   // Check collision between two rectangles
-  const checkCollision = (rect1, rect2) => {
+  const checkCollision = (rect1: {x: number, y: number, width: number, height: number}, rect2: {x: number, y: number, width: number, height: number}) => {
     return rect1.x < rect2.x + rect2.width &&
            rect1.x + rect1.width > rect2.x &&
            rect1.y < rect2.y + rect2.height &&
@@ -261,7 +292,7 @@ const CodeMonstersBattle = () => {
 
   // Handle restart
   useEffect(() => {
-    const handleRestart = (e) => {
+    const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'r' || e.key === 'R') {
         setGameState({
           player: {
@@ -292,8 +323,10 @@ const CodeMonstersBattle = () => {
       }
     };
 
-    window.addEventListener('keydown', handleRestart);
-    return () => window.removeEventListener('keydown', handleRestart);
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
   }, []);
 
   return (

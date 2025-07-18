@@ -1,12 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 type CodePeg = 'useState' | 'useEffect' | 'useContext' | 'useReducer' | 'useCallback' | 'useMemo' | 'useRef' | 'useLayoutEffect';
 
-interface CodePegWithCheck {
-  value: CodePeg;
-  checked: boolean;
-}
+// CodePegWithCheck interface is not used in the component
 
 const CODE_LENGTH = 4;
 const MAX_ATTEMPTS = 8;
@@ -28,7 +25,7 @@ const generateSecretCode = (): CodePeg[] => {
 const ReactCodeBreaker = () => {
   const [secretCode, setSecretCode] = useState<CodePeg[]>([]);
   const [currentGuess, setCurrentGuess] = useState<CodePeg[]>([]);
-  const [attempts, setAttempts] = useState<CodePeg[][]>([]);
+  const [guesses, setGuesses] = useState<CodePeg[][]>([]);
   const [feedback, setFeedback] = useState<string[][]>([]);
   const [gameStatus, setGameStatus] = useState<'playing' | 'won' | 'lost'>('playing');
   const [showCode, setShowCode] = useState(false);
@@ -39,7 +36,7 @@ const ReactCodeBreaker = () => {
   const startNewGame = useCallback(() => {
     setSecretCode(generateSecretCode());
     setCurrentGuess([]);
-    setAttempts([]);
+    setGuesses([]);
     setFeedback([]);
     setGameStatus('playing');
     setShowCode(false);
@@ -69,13 +66,12 @@ const ReactCodeBreaker = () => {
   // Generate feedback for the guess
   const getFeedback = useCallback((guess: CodePeg[]) => {
     const feedback: ('red' | 'white' | 'empty')[] = [];
-    // Create a copy of the secret code with an additional 'checked' flag
-    const codeCopy = secretCode.map(peg => ({
-      value: peg,
+    const codeCopy = [...secretCode].map((value) => ({
+      value,
       checked: false
     }));
-    
-    // First pass: check for correct position and value (red peg)
+
+    // First pass: check for correct value and position (red peg)
     for (let i = 0; i < guess.length; i++) {
       if (guess[i] === codeCopy[i].value) {
         feedback.push('red');
@@ -90,7 +86,7 @@ const ReactCodeBreaker = () => {
       
       // Find first occurrence of this peg in the code that hasn't been checked yet
       const foundIndex = codeCopy.findIndex(
-        (codePeg, index) => 
+        (codePeg) => 
           !codePeg.checked && 
           codePeg.value === guess[i] && 
           (i >= codeCopy.length || guess[i] !== codeCopy[i]?.value)
@@ -123,22 +119,17 @@ const ReactCodeBreaker = () => {
     const isWin = checkWin(currentGuess);
     const currentFeedback = getFeedback(currentGuess);
 
-    setAttempts([...attempts, [...currentGuess]]);
+    setGuesses([...guesses, [...currentGuess]]);
     setFeedback([...feedback, currentFeedback]);
+    setCurrentGuess([]);
 
     if (isWin) {
       setGameStatus('won');
       setShowCode(true);
-      return;
-    }
-
-    if (attempts.length + 1 >= MAX_ATTEMPTS) {
+    } else if (guesses.length + 1 >= MAX_ATTEMPTS) {
       setGameStatus('lost');
       setShowCode(true);
-      return;
     }
-
-    setCurrentGuess([]);
   };
 
   // Handle delete last peg
@@ -146,6 +137,14 @@ const ReactCodeBreaker = () => {
     if (currentGuess.length === 0) return;
     setCurrentGuess(currentGuess.slice(0, -1));
   };
+
+  // Game over check
+  useEffect(() => {
+    if (guesses.length >= MAX_ATTEMPTS && gameStatus === 'playing') {
+      setGameStatus('lost');
+      setShowCode(true);
+    }
+  }, [guesses.length, gameStatus]);
 
   // Render a single peg
   const renderPeg = (peg: CodePeg | '', index: number, isCurrent = false) => {
@@ -288,7 +287,7 @@ const ReactCodeBreaker = () => {
         {/* Attempts */}
         <div className="bg-gray-800/50 p-6 rounded-lg">
           <div className="flex justify-between items-center mb-4">
-            <h3 className="text-lg font-semibold text-white">Attempts ({attempts.length}/{MAX_ATTEMPTS})</h3>
+            <h3 className="text-lg font-semibold text-white">Attempts ({guesses.length}/{MAX_ATTEMPTS})</h3>
             <div className="text-sm text-gray-400">
               {gameStatus === 'playing' ? 'In Progress' : gameStatus === 'won' ? 'You Won! 🎉' : 'Game Over! 😢'}
             </div>
@@ -301,12 +300,12 @@ const ReactCodeBreaker = () => {
           )}
 
           <div className="space-y-3 max-h-96 overflow-y-auto pr-2">
-            {attempts.length === 0 ? (
+            {guesses.length === 0 ? (
               <div className="text-center py-8 text-gray-500">
                 Your attempts will appear here
               </div>
             ) : (
-              attempts.map((attempt, attemptIndex) => (
+              guesses.map((attempt, attemptIndex) => (
                 <div key={attemptIndex} className="flex items-center space-x-4 p-3 bg-gray-700/30 rounded-lg">
                   <div className="flex-1 grid grid-cols-4 gap-2">
                     {attempt.map((peg, pegIndex) => (
