@@ -110,6 +110,21 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ isOpen, onClose }) => {
     try {
       // Use the Vite environment variable with VITE_ prefix
       const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      console.log('API URL:', apiUrl);
+      
+      const requestBody = {
+        message: input,
+        model: selectedModel,
+        conversation_history: messages
+          .filter((m) => !m.isUser)
+          .map((m) => ({
+            role: 'assistant',
+            content: m.content,
+          })),
+      };
+      
+      console.log('Request body:', JSON.stringify(requestBody, null, 2));
+      
       const response = await fetch(`${apiUrl}/chat`, {
         method: 'POST',
         headers: {
@@ -127,11 +142,16 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ isOpen, onClose }) => {
         }),
       });
 
+      console.log('Response status:', response.status);
+      
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        const errorText = await response.text();
+        console.error('Error response:', errorText);
+        throw new Error(`HTTP error! status: ${response.status}, body: ${errorText}`);
       }
 
       const data = await response.json();
+      console.log('Response data:', data);
       
       const aiMessage: Message = {
         id: (Date.now() + 1).toString(),
