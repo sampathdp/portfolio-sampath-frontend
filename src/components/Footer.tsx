@@ -14,7 +14,7 @@ const Footer = () => {
             className="mb-6 md:mb-0"
           >
             <p className="text-sm text-gray-400">
-              © {new Date().getFullYear()} Your Name. All rights reserved.
+              © {new Date().getFullYear()} sampath dananjaya. All rights reserved.
             </p>
           </motion.div>
           
@@ -25,15 +25,6 @@ const Footer = () => {
             viewport={{ once: true }}
             className="flex flex-wrap justify-center gap-6"
           >
-            {['Privacy Policy', 'Terms of Service', 'Contact'].map((item, index) => (
-              <a
-                key={index}
-                href="#"
-                className="text-gray-400 hover:text-cyan-400 text-sm font-medium transition-colors hover:underline underline-offset-4"
-              >
-                {item}
-              </a>
-            ))}
           </motion.div>
         </div>
         
@@ -45,7 +36,7 @@ const Footer = () => {
           className="mt-8 pt-8 border-t border-gray-800 text-center"
         >
           <p className="text-gray-500 text-sm">
-            Built with React, TypeScript, Tailwind CSS, and ❤️
+            Built with React, TypeScript, Tailwind CSS, Python and ❤️
           </p>
         </motion.div>
       </div>
