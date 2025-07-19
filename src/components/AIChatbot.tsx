@@ -108,7 +108,9 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ isOpen, onClose }) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://127.0.0.1:8000/chat', {
+      // Use the Vite environment variable with VITE_ prefix
+      const apiUrl = import.meta.env.VITE_API_URL || '/api';
+      const response = await fetch(`${apiUrl}/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -140,9 +142,20 @@ const AIChatbot: React.FC<AIChatbotProps> = ({ isOpen, onClose }) => {
       setMessages((prev) => [...prev, aiMessage]);
     } catch (error) {
       console.error('Error:', error);
+      let errorContent = 'Sorry, I encountered an error. Please try again later.';
+      if (error instanceof Error) {
+        if (error.message.includes('Failed to fetch')) {
+          errorContent = 'Unable to connect to the AI service. Please check your internet connection and try again.';
+        } else if (error.message.includes('500')) {
+          errorContent = 'The server encountered an error. Please try again later.';
+        } else if (error.message.includes('429')) {
+          errorContent = 'Rate limit exceeded. Please wait a moment before trying again.';
+        }
+      }
+      
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
-        content: 'Sorry, I encountered an error. Please try again later.',
+        content: errorContent,
         isUser: false,
       };
       setMessages((prev) => [...prev, errorMessage]);
