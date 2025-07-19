@@ -6,19 +6,19 @@ const Contact = () => {
     {
       icon: <EnvelopeIcon className="h-8 w-8 text-blue-500" />,
       title: 'Email',
-      value: 'your.email@example.com',
-      href: 'mailto:your.email@example.com',
+      value: 'sampathdp28@gmail.com',
+      href: 'mailto:sampathdp28@gmail.com',
     },
     {
       icon: <PhoneIcon className="h-8 w-8 text-blue-500" />,
       title: 'Phone',
-      value: '+1 (123) 456-7890',
-      href: 'tel:+11234567890',
+      value: '+94 (71) 263-2679',
+      href: 'tel:+94712632679',
     },
     {
       icon: <MapPinIcon className="h-8 w-8 text-blue-500" />,
       title: 'Location',
-      value: 'San Francisco, CA',
+      value: 'Panadura, Sri Lanka',
       href: '#',
     },
   ];
@@ -80,26 +80,24 @@ const Contact = () => {
             <div className="mt-12">
               <h3 className="text-xl font-semibold text-white mb-4">Connect With Me</h3>
               <div className="flex space-x-4">
-                {[
-                  { name: 'GitHub', url: '#' },
-                  { name: 'LinkedIn', url: '#' },
-                  { name: 'Twitter', url: '#' },
-                ].map((social, index) => (
-                  <a
-                    key={index}
-                    href={social.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="bg-gray-900/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10"
-                    aria-label={social.name}
-                  >
-                    <span className="sr-only">{social.name}</span>
-                    <div className="h-6 w-6">
-                      {/* Replace with actual social icons */}
-                      <div className="bg-gray-600 rounded-full w-6 h-6"></div>
-                    </div>
-                  </a>
-                ))}
+                <a href="https://github.com/sampathdp" className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10">
+                <span className="sr-only">GitHub</span>
+                <svg className="w-6 h-6 text-gray-300 hover:text-cyan-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path fillRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.1-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clipRule="evenodd" />
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/in/sampath-dananjaya-b191001a1" className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-cyan-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-cyan-500/10">
+                <span className="sr-only">LinkedIn</span>
+                <svg className="w-6 h-6 text-gray-300 hover:text-cyan-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                </svg>
+              </a>
+              <a href="https://stackoverflow.com/users/23538607/sampath-dananjaya" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full bg-gray-900/30 backdrop-blur-sm border border-gray-700/30 hover:border-orange-500/30 transition-all duration-300 hover:shadow-lg hover:shadow-orange-500/10">
+                <span className="sr-only">Stack Overflow</span>
+                <svg className="w-6 h-6 text-gray-300 hover:text-orange-400 transition-colors" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M18.986 21.865v-6.404h2.134V24H1.844v-8.539h2.13v6.404h15.012zM6.111 19.731H16.85v-2.137H6.111v2.137zm.259-4.852l10.48 2.189.451-2.136-10.478-2.187-.453 2.134zm1.359-5.056l9.705 4.53.903-1.95-9.706-4.53-.902 1.936v.014zm2.715-4.785l8.217 6.855 1.359-1.62-8.216-6.853-1.35 1.617-.01.001zM15.751 0l-1.746 1.294 6.405 8.604 1.746-1.294L15.749 0h.002z" />
+                </svg>
+              </a>
               </div>
             </div>
           </motion.div>
