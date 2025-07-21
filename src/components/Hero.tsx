@@ -73,8 +73,8 @@ const Hero = () => {
   }, [displayText, currentRoleIndex, isDeleting]);
 
   return (
-    <section id="home" className="min-h-screen flex items-center justify-center relative overflow-hidden bg-transparent">
-      <div className="relative z-10 container mx-auto px-6 text-center">
+    <section id="home" className="pt-32 pb-20 flex items-center justify-center relative overflow-hidden bg-transparent">
+      <div className="relative z-10 container mx-auto px-6 text-center flex flex-col items-center justify-center min-h-[70vh]">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ const Hero = () => {
           className="mb-8"
         >
           <motion.div 
-            className="inline-flex items-center px-5 py-2.5 rounded-full bg-gradient-to-r from-purple-500/10 to-cyan-500/10 backdrop-blur-sm border border-white/5 text-cyan-300 text-sm font-mono mb-8 shadow-lg shadow-cyan-500/10"
+            className="inline-flex items-center px-5 py-2.5 rounded-full text-cyan-300 text-sm font-mono mb-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
@@ -169,11 +169,9 @@ const Hero = () => {
               
               <motion.a
                 href="#projects"
-                className="group relative px-8 py-3.5 bg-gray-800/50 backdrop-blur-sm border border-gray-700 text-white font-medium rounded-xl hover:bg-gray-700/50 transition-all duration-300 flex items-center"
+                className="group relative px-8 py-3.5 text-white font-medium rounded-xl transition-all duration-300 flex items-center"
                 whileHover={{ 
-                  scale: 1.05,
-                  borderColor: 'rgba(165, 243, 252, 0.5)',
-                  boxShadow: '0 0 20px rgba(6, 182, 212, 0.2)'
+                  scale: 1.05
                 }}
                 whileTap={{ scale: 0.95 }}
               >
@@ -208,7 +206,7 @@ const Hero = () => {
             }}
           >
             <motion.div 
-              className="w-8 h-8 rounded-full flex items-center justify-center mb-1 group-hover:bg-cyan-500/10 transition-colors"
+              className="w-8 h-8 rounded-full flex items-center justify-center mb-1 transition-colors"
               animate={{
                 y: [0, 5, 0],
                 transition: {

@@ -119,7 +119,7 @@ function AppContent() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-950 text-white relative">
+    <div className="min-h-screen text-white relative">
       {/* Particles Background */}
       <div className="fixed inset-0 -z-10">
         <ParticlesBackground />

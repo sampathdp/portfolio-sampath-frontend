@@ -82,7 +82,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden bg-transparent">
+    <section id="about" className="py-20 relative overflow-hidden bg-gradient-to-b from-transparent via-gray-900/10 to-transparent backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -112,7 +112,7 @@ const About = () => {
           >
             <div className="relative group">
               <div className="absolute inset-0 bg-transparent -z-10"></div>
-              <div className="bg-gray-900/30 backdrop-blur-sm rounded-2xl p-6 border border-gray-700/30 shadow-xl overflow-hidden">
+              <div className="bg-white/5 backdrop-blur-md rounded-2xl p-6 border border-white/10 shadow-xl overflow-hidden">
                 <div className="absolute -right-10 -top-10 w-32 h-32 bg-cyan-500/10 rounded-full"></div>
                 <div className="absolute -left-10 -bottom-10 w-40 h-40 bg-blue-500/10 rounded-full"></div>
                 
@@ -155,28 +155,30 @@ const About = () => {
 
           {/* Content */}
           <div className="lg:w-2/3">
-            {/* Tabs */}
-            <div className="mb-8 border-b border-gray-700">
-              <nav className="flex space-x-1">
-                {tabItems.map((tab) => (
-                  <button
-                    key={tab.id}
-                    onClick={() => setActiveTab(tab.id)}
-                    className={`flex items-center px-4 py-3 text-sm font-medium rounded-t-lg transition-all duration-200 ${
-                      activeTab === tab.id
-                        ? 'text-cyan-400 bg-gray-800 border-t border-l border-r border-gray-700'
-                        : 'text-gray-400 hover:text-cyan-300 hover:bg-gray-800/50'
-                    }`}
-                  >
-                    <span className="mr-2">{tab.icon}</span>
-                    {tab.label}
-                  </button>
-                ))}
-              </nav>
-            </div>
+            {/* Tabs and Content Container */}
+            <div className="border border-white/10 rounded-lg bg-white/5 backdrop-blur-sm overflow-hidden">
+              {/* Tabs */}
+              <div className="border-b border-white/10">
+                <nav className="flex space-x-1 p-1">
+                  {tabItems.map((tab) => (
+                    <button
+                      key={tab.id}
+                      onClick={() => setActiveTab(tab.id)}
+                      className={`flex items-center px-4 py-3 text-sm font-medium rounded-lg transition-all duration-200 ${
+                        activeTab === tab.id
+                          ? 'text-cyan-400 bg-white/10 backdrop-blur-sm border border-white/20 shadow-sm'
+                          : 'text-gray-400 hover:text-cyan-300 hover:bg-white/5 hover:border-white/10'
+                      }`}
+                    >
+                      <span className="mr-2">{tab.icon}</span>
+                      {tab.label}
+                    </button>
+                  ))}
+                </nav>
+              </div>
 
-            {/* Tab Content */}
-            <div className="relative min-h-[400px]">
+              {/* Tab Content */}
+              <div className="relative min-h-[400px] p-6">
               <AnimatePresence mode="wait">
                 {activeTab === 'about' && (
                   <motion.div
@@ -204,21 +206,21 @@ const About = () => {
                     <div className="pt-4">
                       <h4 className="text-lg font-semibold text-white mb-4">What I Do</h4>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700/50 hover:border-cyan-500/30 transition-colors">
+                        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 hover:border-cyan-500/30 transition-colors">
                           <div className="w-12 h-12 bg-cyan-500/10 rounded-full flex items-center justify-center mb-4">
                             <CodeBracketIcon className="w-6 h-6 text-cyan-400" />
                           </div>
                           <h5 className="text-white font-medium mb-2">Game Development</h5>
                           <p className="text-gray-400 text-sm">Creating immersive 2D/3D games with Unity and C#, focusing on performance and engaging gameplay mechanics.</p>
                         </div>
-                        <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700/50 hover:border-blue-500/30 transition-colors">
+                        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 hover:border-blue-500/30 transition-colors">
                           <div className="w-12 h-12 bg-blue-500/10 rounded-full flex items-center justify-center mb-4">
                             <PuzzlePieceIcon className="w-6 h-6 text-blue-400" />
                           </div>
                           <h5 className="text-white font-medium mb-2">Web Development</h5>
                           <p className="text-gray-400 text-sm">Building responsive and interactive web applications using React, Node.js, and modern web technologies.</p>
                         </div>
-                        <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700/50 hover:border-purple-500/30 transition-colors">
+                        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 hover:border-purple-500/30 transition-colors">
                           <div className="w-12 h-12 bg-purple-500/10 rounded-full flex items-center justify-center mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
@@ -228,7 +230,7 @@ const About = () => {
                           <h5 className="text-white font-medium mb-2">Full-Stack Solutions</h5>
                           <p className="text-gray-400 text-sm">Developing end-to-end solutions with both frontend and backend technologies for seamless user experiences.</p>
                         </div>
-                        <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700/50 hover:border-green-500/30 transition-colors">
+                        <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 hover:border-green-500/30 transition-colors">
                           <div className="w-12 h-12 bg-green-500/10 rounded-full flex items-center justify-center mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -303,7 +305,7 @@ const About = () => {
                           className="relative pl-8 border-l-2 border-cyan-500/30 group"
                         >
                           <div className="absolute left-0 w-4 h-4 rounded-full bg-cyan-500 -translate-x-[9px] mt-1 group-hover:scale-150 transition-transform"></div>
-                          <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700/50 hover:border-cyan-500/50 transition-colors">
+                          <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 hover:border-cyan-500/50 transition-colors">
                             <h4 className="text-xl font-semibold text-white">{exp.role}</h4>
                             <div className="flex flex-col sm:flex-row sm:items-center text-sm text-gray-400 mb-3">
                               <span className="font-medium text-cyan-400">{exp.company}</span>
@@ -352,7 +354,7 @@ const About = () => {
                           className="relative pl-8 border-l-2 border-purple-500/30 group"
                         >
                           <div className="absolute left-0 w-4 h-4 rounded-full bg-purple-500 -translate-x-[9px] mt-1 group-hover:scale-150 transition-transform"></div>
-                          <div className="bg-gray-800/50 p-6 rounded-lg border border-gray-700/50 hover:border-purple-500/50 transition-colors">
+                          <div className="bg-white/5 backdrop-blur-sm p-6 rounded-lg border border-white/10 hover:border-purple-500/50 transition-colors">
                             <h4 className="text-xl font-semibold text-white">{edu.degree}</h4>
                             <div className="flex flex-col sm:flex-row sm:items-center text-sm text-gray-400 mb-3">
                               <span className="font-medium text-purple-400">{edu.institution}</span>
@@ -369,6 +371,7 @@ const About = () => {
               </AnimatePresence>
             </div>
           </div>
+        </div>
         </div>
       </div>
     </section>
