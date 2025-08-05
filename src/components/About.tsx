@@ -82,7 +82,7 @@ const About = () => {
   ];
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden bg-gradient-to-b from-transparent via-gray-900/10 to-transparent backdrop-blur-sm">
+    <section id="about" className="py-16 relative overflow-hidden bg-gradient-to-b from-transparent via-gray-900/10 to-transparent backdrop-blur-sm">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { motion } from 'framer-motion';
 import { CodeBracketIcon, EyeIcon, PlayIcon } from '@heroicons/react/24/outline';
 
 // Placeholder images (using placeholder service for demo)
@@ -191,7 +192,7 @@ const ProjectCard = ({ project }: { project: Project }) => {
 
 const Projects = () => {
   return (
-    <section id="projects" className="py-32 bg-transparent relative overflow-hidden">
+    <section id="projects" className="py-16 bg-transparent relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-cyan-500/5 via-transparent to-transparent w-full h-full"></div>
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-blue-500/5 via-transparent to-transparent w-full h-full"></div>
@@ -203,21 +204,42 @@ const Projects = () => {
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px]"></div>
         </div>
         
-        <div className="text-center mb-24 relative">
-          <div className="inline-block relative">
-            <span className="text-xs font-mono text-cyan-400/80 mb-2 block tracking-[0.5em] uppercase">Showcase</span>
-            <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400 mb-6 relative z-10">
-              <span className="relative inline-block">
+        <div className="text-center mb-24">
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <motion.span 
+              className="text-sm font-mono text-cyan-400 mb-3 block tracking-wider uppercase"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+            >
+              Showcase
+            </motion.span>
+            <motion.h2 
+              className="text-4xl md:text-6xl font-bold text-white mb-6 relative inline-block"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
+            >
+              <span className="relative">
                 Game Projects
-                <span className="absolute -bottom-2 left-0 w-full h-2 bg-gradient-to-r from-cyan-500/40 to-purple-500/40 blur-md -z-10"></span>
+                <motion.span 
+                  className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400"
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ delay: 0.8, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                />
               </span>
-            </h2>
-            <div className="absolute -bottom-4 left-1/2 transform -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-cyan-500 via-blue-500 to-purple-500 rounded-full"></div>
-            <div className="absolute -bottom-5 left-1/2 transform -translate-x-1/2 w-40 h-1 bg-gradient-to-r from-cyan-500/30 via-blue-500/30 to-purple-500/30 blur-sm rounded-full"></div>
-          </div>
-          <p className="mt-8 max-w-2xl mx-auto text-gray-400 text-lg">
-            A collection of my game development projects showcasing different genres, mechanics, and technical implementations.
-          </p>
+            </motion.h2>
+            <p className="mt-8 max-w-2xl mx-auto text-gray-400 text-lg">
+              A collection of my game development projects showcasing different genres, mechanics, and technical implementations.
+            </p>
+          </motion.div>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">

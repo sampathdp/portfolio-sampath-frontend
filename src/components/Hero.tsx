@@ -73,8 +73,8 @@ const Hero = () => {
   }, [displayText, currentRoleIndex, isDeleting]);
 
   return (
-    <section id="home" className="pt-32 pb-20 flex items-center justify-center relative overflow-hidden bg-transparent">
-      <div className="relative z-10 container mx-auto px-6 text-center flex flex-col items-center justify-center min-h-[70vh]">
+    <section id="home" className="pt-24 pb-0 flex items-center justify-center relative overflow-hidden bg-transparent">
+      <div className="relative z-10 container mx-auto px-6 text-center flex flex-col items-center justify-center min-h-[60vh] mb-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

@@ -24,7 +24,7 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" className="py-20 relative overflow-hidden bg-transparent">
+    <section id="contact" className="py-16 relative overflow-hidden bg-transparent">
       {/* Background elements - removed gradient overlay */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0"></div>

@@ -29,7 +29,7 @@ const Games = () => {
   ];
 
   return (
-    <section id="games" className="py-20 relative overflow-hidden bg-transparent">
+    <section id="games" className="py-16 relative overflow-hidden bg-transparent">
       <div className="space-y-6">
         <motion.div 
           className="text-center mb-8"
